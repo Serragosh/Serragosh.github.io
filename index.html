@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blinking Eye ASCII Animation</title>
+    <title>Running Stickman ASCII Animation</title>
+    <style>
+      #animation {
+        position: absolute;
+        top: 50%;
+        left: -10%;
+        font-size: 2rem;
+      }
+    </style>
   </head>
   <body>
     <pre id="animation"></pre>
     <script>
       const frames = [
-        "       _____",
-        "     /      \\",
-        "    |        |",
-        "    |        |",
-        "    |        |",
-        "     \\______/"
+        "   O/",
+        "  /|\\",
+        "  / \\",
+        "   |",
+        "  / \\",
+        " /   \\"
       ];
       let currentFrame = 0;
-      setInterval(() => {
-        document.getElementById("animation").innerText = frames[currentFrame];
-        currentFrame = (currentFrame + 1) % frames.length;
-      }, 500);
+      let position = -10;
+      const animationInterval = setInterval(() => {
+        if (position > 100) {
+          clearInterval(animationInterval);
+        } else {
+          const frame = frames[currentFrame];
+          const padding = " ".repeat(position);
+          const animation = padding + frame;
+          document.getElementById("animation").innerText = animation;
+          currentFrame = (currentFrame + 1) % frames.length;
+          position += 5;
+        }
+      }, 200);
     </script>
   </body>
 </html>
