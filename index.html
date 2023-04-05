@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blinking Eye</title>
-    <style>
-      /* Define the CSS for the blinking eye animation */
-      .blink {
-        animation: blink-animation 1s steps(5, start) infinite;
-        -webkit-animation: blink-animation 1s steps(5, start) infinite;
-        margin: auto;
-        font-size: 96px;
-        font-weight: bold;
-      }
-      @keyframes blink-animation {
-        to {
-          visibility: hidden;
-        }
-      }
-      @-webkit-keyframes blink-animation {
-        to {
-          visibility: hidden;
-        }
-      }
-    </style>
+    <title>Blinking Eye ASCII Animation</title>
   </head>
   <body>
-    <div class="blink">
-      <pre>
-         ___
-      q(-_-)p
-       (o o)
-        ()()
-       ()(())
-      </pre>
-    </div>
+    <pre id="animation"></pre>
+    <script>
+      const frames = [
+        "       _____",
+        "     /      \\",
+        "    |        |",
+        "    |        |",
+        "    |        |",
+        "     \\______/"
+      ];
+      let currentFrame = 0;
+      setInterval(() => {
+        document.getElementById("animation").innerText = frames[currentFrame];
+        currentFrame = (currentFrame + 1) % frames.length;
+      }, 500);
+    </script>
   </body>
 </html>
