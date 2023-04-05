@@ -1,76 +1,51 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Poop Button</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/dom-confetti@1.0.4/confetti.min.js"></script>
-	<style>
-		body {
-			background-color: brown;
-			text-align: center;
-			font-size: 30px;
-			margin-top: 200px;
-			font-family: Arial, sans-serif;
-			color: white;
-			height: 100%;
-			width: 100%;
-			position: fixed;
-			top: 0;
-			left: 0;
-		}
-
-		#poop-btn {
-			background-color: red;
-			padding: 20px 40px;
-			border: none;
-			color: white;
-			font-weight: bold;
-			font-size: 60px;
-			border-radius: 10px;
-			cursor: pointer;
-			margin: 0 auto;
-			display: block;
-		}
-	</style>
-</head>
-<body>
-	<audio id="audio" src="https://quicksounds.com/uploads/tracks/1300511505_1587370143_551972182.mp3"></audio>
-	<button id="poop-btn">Poop</button>
-	<script>
-		$(document).ready(function(){
-			var confettiSettings = {
-				target: 'poop-btn',
-				max: 100,
-				clock: 50,
-				rotate: true,
-				props: ['circle', 'square', 'triangle', 'line'],
-				colors: [
-					[165,104,246],
-					[230,61,135],
-					[0,199,228],
-					[253,214,126]
-				],
-				burst: false,
-				zIndex: 1
-			};
-			var pooped = false;
-			$('#poop-btn').mousedown(function(){
-				document.getElementById('audio').play();
-				$('body').css('background-image', 'url("https://i.ibb.co/PjKkTPT/rainbow.gif")');
-				confettiSettings.colors = [[106, 59, 15]];
-				if (!pooped) {
-					confettiSettings.burst = true;
-					confetti(confettiSettings);
-					pooped = true;
-				}
-			});
-			$('#poop-btn').mouseup(function(){
-				$('body').css('background-image', '');
-				confettiSettings.burst = false;
-				confettiSettings.colors = [[165,104,246],[230,61,135],[0,199,228],[253,214,126]];
-				pooped = false;
-			});
-		});
-	</script>
-</body>
+  <head>
+    <title>Poop Button</title>
+    <style>
+      body {
+        background-image: url("https://images.unsplash.com/photo-1568386808281-af67d82e8e47");
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      button {
+        display: block;
+        margin: 0 auto;
+        margin-top: 200px;
+        width: 200px;
+        height: 200px;
+        background-color: brown;
+        color: white;
+        border: none;
+        font-size: 36px;
+        font-weight: bold;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="poopButton" onmousedown="poopButtonDown()" onmouseup="poopButtonUp()">Poop</button>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@0.4.0/dist/canvas-confetti.min.js">
+    </script>
+    <script>
+      var audio = new Audio("https://quicksounds.com/uploads/tracks/1300511505_1587370143_551972182.mp3");
+      var poopButton = document.getElementById("poopButton");
+      function poopButtonDown() {
+        poopButton.style.backgroundColor = "blue";
+        document.body.style.backgroundImage = "url('https://www.loveyourdog.com/wp-content/uploads/2021/05/Dog-Looks-at-me-While-Pooping.jpg')";
+        audio.play();
+        var confettiSettings = {
+          particleCount: 200,
+          spread: 360,
+          origin: { x: 0.5, y: 0.5 },
+          colors: ["brown"],
+        };
+        canvasConfetti(confettiSettings);
+      }
+      function poopButtonUp() {
+        poopButton.style.backgroundColor = "brown";
+        document.body.style.backgroundImage = "url('https://www.loveyourdog.com/wp-content/uploads/2021/05/Dog-Looks-at-me-While-Pooping.jpg')";
+      }
+    </script>
+  </body>
 </html>
