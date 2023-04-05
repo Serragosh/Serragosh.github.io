@@ -1,56 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>OpenAI Image API Example</title>
-    <!-- Include jQuery library -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-    <h1>OpenAI Image API Example</h1>
-    <label for="prompt">Enter a prompt:</label>
-    <input type="text" id="prompt">
-    <button id="generate">Generate Image</button>
+  <head>
+    <title>OpenAI Image Generator</title>
+  </head>
+  <body>
+    <h1>OpenAI Image Generator</h1>
+    <form>
+      <label for="prompt">Enter your prompt:</label>
+      <input type="text" id="prompt" name="prompt">
+      <button type="button" onclick="generateImage()">Generate Image</button>
+    </form>
     <div id="image-container"></div>
 
-    <!-- Load environment variables from .env file -->
-    <script src="https://cdn.jsdelivr.net/npm/dotenv@10.0.0/dist/dotenv.min.js"></script>
     <script>
-        dotenv.config();
-
-        // Retrieve the API key from the environment variable
-        var apiKey = process.env.OPENAI_API_KEY;
-
-        // Event listener for the "Generate Image" button
-        $("#generate").click(function() {
-            // Retrieve the prompt from the text input
-            var prompt = $("#prompt").val();
-
-            // Make the API request using jQuery
-            $.ajax({
-                type: 'POST',
-                url: 'https://api.openai.com/v1/images/generations',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + apiKey
-                },
-                data: JSON.stringify({
-                    model: 'image-alpha-001',
-                    prompt: prompt,
-                    num_images: 1,
-                    size: '512x512',
-                    response_format: 'url'
-                }),
-                success: function(response) {
-                    // Show the generated image in the container
-                    $("#image-container").html("<img src='" + response.data[0].url + "'>");
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors here
-                    console.error(xhr.responseText);
-                }
-            });
-        });
+      function generateImage() {
+        const prompt = document.getElementById('prompt').value;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/generate-image');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            const imageUrl = response.imageUrl;
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.innerHTML = '<img src="' + imageUrl + '">';
+          } else {
+            console.log('Error: ' + xhr.status);
+          }
+        };
+        xhr.send(JSON.stringify({ prompt: prompt }));
+      }
     </script>
-</body>
+  </body>
 </html>
