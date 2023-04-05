@@ -1,7 +1,40 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<title>Stability AI Image Generator</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+	<h1>Stability AI Image Generator</h1>
+	<p>Enter a prompt to generate an image:</p>
+	<input type="text" id="prompt">
+	<button onclick="generateImage()">Generate</button>
+	<br><br>
+	<img id="image">
+	<script>
+		function generateImage() {
+			var promptText = document.getElementById("prompt").value;
+			var apiUrl = "https://api.replicate.ai/v1/model/woctezuma/stable-diffusion-gpu/inference";
+			var apiKey = "2011f746bf2f45096b23a4907c291223460e4d53";
+			var requestData = {
+				"prompt": promptText,
+				"response_length": 512,
+				"model": "woctezuma/stable-diffusion-gpu"
+			};
+			$.ajax({
+				type: "POST",
+				url: apiUrl,
+				data: JSON.stringify(requestData),
+				headers: {
+					"Authorization": "Bearer " + apiKey,
+					"Content-Type": "application/json"
+				},
+				success: function(responseData) {
+					var imageUrl = responseData["outputs"][0]["data"]["image/png;base64"];
+					document.getElementById("image").src = "data:image/png;base64," + imageUrl;
+				}
+			});
+		}
+	</script>
 </body>
 </html>
