@@ -1,41 +1,70 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Running Stickman ASCII Animation</title>
-    <style>
-      #animation {
-        position: absolute;
-        top: 50%;
-        left: -10%;
-        font-size: 2rem;
-      }
-    </style>
-  </head>
-  <body>
-    <pre id="animation"></pre>
-    <script>
-      const frames = [
-        "   O/",
-        "  /|\\",
-        "  / \\",
-        "   |",
-        "  / \\",
-        " /   \\"
-      ];
-      let currentFrame = 0;
-      let position = -10;
-      const animationInterval = setInterval(() => {
-        if (position > 100) {
-          clearInterval(animationInterval);
-        } else {
-          const frame = frames[currentFrame];
-          const padding = " ".repeat(position);
-          const animation = padding + frame;
-          document.getElementById("animation").innerText = animation;
-          currentFrame = (currentFrame + 1) % frames.length;
-          position += 5;
-        }
-      }, 200);
-    </script>
-  </body>
+<head>
+	<title>Poop Button</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body {
+			background-color: #fff;
+			text-align: center;
+		}
+		
+		h1 {
+			font-size: 3rem;
+			color: #f00;
+		}
+		
+		#poop-button {
+			background-color: #f00;
+			color: #fff;
+			font-size: 2rem;
+			padding: 1rem 2rem;
+			border: none;
+			border-radius: 1rem;
+			cursor: pointer;
+			transition: all 0.3s ease-in-out;
+		}
+		
+		#poop-button:hover {
+			background-color: #f88;
+		}
+		
+		#poop-button.blue {
+			background-color: #00f;
+			color: #fff;
+			box-shadow: 0 0 20px 10px #00f;
+			animation: confetti 1s ease-in-out;
+			animation-fill-mode: forwards;
+		}
+		
+		@keyframes confetti {
+			0% {
+				transform: translateY(0);
+				opacity: 1;
+			}
+			
+			50% {
+				transform: translateY(-100px) rotate(180deg);
+				opacity: 0.5;
+			}
+			
+			100% {
+				transform: translateY(-200px) rotate(360deg);
+				opacity: 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>Poop Button</h1>
+	<button id="poop-button" onclick="poop()">Poop</button>
+	
+	<script>
+		function poop() {
+			document.getElementById("poop-button").classList.add("blue");
+			document.getElementById("poop-button").innerHTML = "Thanks for pooping!";
+		}
+	</script>
+</body>
 </html>
