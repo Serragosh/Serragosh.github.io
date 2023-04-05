@@ -2,72 +2,73 @@
 <html>
 <head>
 	<title>Poop Button</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/dom-confetti@1.0.4/confetti.min.js"></script>
 	<style>
 		body {
-			background-color: #F5DEB3;
+			background-color: brown;
 			text-align: center;
-			font-family: sans-serif;
-			font-size: 2em;
-			margin-top: 10%;
-		}
-		#poop-button {
-			display: inline-block;
-			background-color: red;
+			font-size: 30px;
+			margin-top: 200px;
+			font-family: Arial, sans-serif;
 			color: white;
+			height: 100%;
+			width: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+
+		#poop-btn {
+			background-color: red;
 			padding: 20px 40px;
+			border: none;
+			color: white;
+			font-weight: bold;
+			font-size: 60px;
 			border-radius: 10px;
 			cursor: pointer;
-			font-weight: bold;
-		}
-		#poop-button.blue {
-			background-color: blue;
-		}
-		.confetti {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			z-index: 100;
-			pointer-events: none;
-		}
-		.confetti img {
-			position: absolute;
-			top: 0;
-			left: 0;
-			pointer-events: none;
-			user-select: none;
-			opacity: 0;
-			animation: confetti 3s ease-out forwards;
-		}
-		@keyframes confetti {
-			0% {
-				transform: rotate(0deg);
-			}
-			100% {
-				transform: rotate(360deg);
-			}
+			margin: 0 auto;
+			display: block;
 		}
 	</style>
 </head>
 <body>
-	<button id="poop-button">Poop</button>
-	<audio id="bark-sound" src="https://quicksounds.com/uploads/tracks/1300511505_1587370143_551972182.mp3"></audio>
-	<div class="confetti"></div>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<audio id="audio" src="https://quicksounds.com/uploads/tracks/1300511505_1587370143_551972182.mp3"></audio>
+	<button id="poop-btn">Poop</button>
 	<script>
-		$(document).ready(function() {
-			$("#poop-button").click(function() {
-				$(this).addClass("blue");
-				$("#bark-sound")[0].play();
-				$(".confetti").html("");
-				for (var i = 0; i < 50; i++) {
-					var size = Math.floor(Math.random() * 60) + 10;
-					var left = Math.floor(Math.random() * 100) + 1;
-					var duration = Math.floor(Math.random() * 5) + 2;
-					var delay = Math.floor(Math.random() * 3);
-					$(".confetti").append("<img src='https://i.imgur.com/RnT9yGf.png' style='width: "+size+"px; left: "+left+"%; animation-duration: "+duration+"s; animation-delay: "+delay+"s;'>");
+		$(document).ready(function(){
+			var confettiSettings = {
+				target: 'poop-btn',
+				max: 100,
+				clock: 50,
+				rotate: true,
+				props: ['circle', 'square', 'triangle', 'line'],
+				colors: [
+					[165,104,246],
+					[230,61,135],
+					[0,199,228],
+					[253,214,126]
+				],
+				burst: false,
+				zIndex: 1
+			};
+			var pooped = false;
+			$('#poop-btn').mousedown(function(){
+				document.getElementById('audio').play();
+				$('body').css('background-image', 'url("https://i.ibb.co/PjKkTPT/rainbow.gif")');
+				confettiSettings.colors = [[106, 59, 15]];
+				if (!pooped) {
+					confettiSettings.burst = true;
+					confetti(confettiSettings);
+					pooped = true;
 				}
+			});
+			$('#poop-btn').mouseup(function(){
+				$('body').css('background-image', '');
+				confettiSettings.burst = false;
+				confettiSettings.colors = [[165,104,246],[230,61,135],[0,199,228],[253,214,126]];
+				pooped = false;
 			});
 		});
 	</script>
