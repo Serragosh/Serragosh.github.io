@@ -1,51 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Poop Button</title>
-    <style>
-      body {
-        background-image: url("https://images.unsplash.com/photo-1568386808281-af67d82e8e47");
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-      button {
-        display: block;
-        margin: 0 auto;
-        margin-top: 200px;
-        width: 200px;
-        height: 200px;
-        background-color: brown;
-        color: white;
-        border: none;
-        font-size: 36px;
-        font-weight: bold;
-        border-radius: 50%;
-      }
-    </style>
-  </head>
-  <body>
-    <button id="poopButton" onmousedown="poopButtonDown()" onmouseup="poopButtonUp()">Poop</button>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@0.4.0/dist/canvas-confetti.min.js">
-    </script>
-    <script>
-      var audio = new Audio("https://quicksounds.com/uploads/tracks/1300511505_1587370143_551972182.mp3");
-      var poopButton = document.getElementById("poopButton");
-      function poopButtonDown() {
-        poopButton.style.backgroundColor = "blue";
-        document.body.style.backgroundImage = "url('https://www.loveyourdog.com/wp-content/uploads/2021/05/Dog-Looks-at-me-While-Pooping.jpg')";
-        audio.play();
-        var confettiSettings = {
-          particleCount: 200,
-          spread: 360,
-          origin: { x: 0.5, y: 0.5 },
-          colors: ["brown"],
-        };
-        canvasConfetti(confettiSettings);
-      }
-      function poopButtonUp() {
-        poopButton.style.backgroundColor = "brown";
-        document.body.style.backgroundImage = "url('https://www.loveyourdog.com/wp-content/uploads/2021/05/Dog-Looks-at-me-While-Pooping.jpg')";
-      }
-    </script>
-  </body>
+<head>
+	<title>Poop Button</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.0.1/canvas-confetti.min.js"></script>
+	<style>
+		body {
+			background-image: url("https://image.petmd.com/files/styles/863x625/public/dog-pooping-shutterstock_194407178.jpg?w=1080&q=75");
+			background-size: cover;
+			background-repeat: no-repeat;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			font-family: Arial, sans-serif;
+		}
+		h1 {
+			font-size: 4em;
+			color: #fff;
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+		}
+		button {
+			font-size: 2em;
+			padding: 30px 50px;
+			border-radius: 10px;
+			background-color: #8B4513;
+			color: #fff;
+			border: none;
+			cursor: pointer;
+			transition: background-color 0.5s ease;
+			outline: none;
+		}
+		button:hover {
+			background-color: #A0522D;
+		}
+		button:focus {
+			background-color: #A0522D;
+			box-shadow: 0 0 5px #A0522D;
+		}
+	</style>
+</head>
+<body>
+	<h1>Poop Button</h1>
+	<button id="poop-button" onmousedown="changeColor('#00CED1')" onmouseup="changeColor('#8B4513')">Poop</button>
+
+	<script>
+		var poopButton = document.getElementById("poop-button");
+		var audio = new Audio("https://quicksounds.com/uploads/tracks/1300511505_1587370143_551972182.mp3");
+		poopButton.addEventListener("click", function() {
+			audio.play();
+			var confettiSettings = {
+			  "target": "confetti",
+			  "size": 1.5,
+			  "rotate": true,
+			  "max": 50,
+			  "startVelocity": 30,
+			  "spread": 180,
+			  "gravity": 1,
+			  "colors": ["#835E3B", "#8B4513", "#A0522D", "#CD853F"]
+			};
+			canvasConfetti.create(confettiSettings).explode();
+
+			var dogImage = document.createElement("img");
+			dogImage.setAttribute("src", "https://image.petmd.com/files/styles/863x625/public/dog-pooping-shutterstock_194407178.jpg?w=1080&q=75");
+			dogImage.setAttribute("width", "500");
+			dogImage.setAttribute("height", "500");
+			document.body.appendChild(dogImage);
+
+			document.body.style.backgroundImage = "none";
+		});
+
+		function changeColor(color) {
+			poopButton.style.backgroundColor = color;
+		}
+	</script>
+
+	<canvas id="confetti"></canvas>
+</body>
 </html>
