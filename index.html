@@ -1,43 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>DALL-E Image Generator</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>OpenAI Image API Example</title>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<h1>DALL-E Image Generator</h1>
-	<label for="prompt">Enter a prompt:</label>
-	<input type="text" id="prompt" name="prompt">
-	<button id="generate-btn">Generate Image</button>
-	<div id="image-container"></div>
-	<script>
-		$(document).ready(function() {
-			$('#generate-btn').click(function() {
-				var prompt = $('#prompt').val();
-				$.ajax({
-					type: 'POST',
-					url: 'https://api.openai.com/v1/images/generations',
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': 'Bearer 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'
-					},
-					data: JSON.stringify({
-						model: 'image-alpha-001',
-						prompt: prompt,
-						num_images: 1,
-						size: '512x512',
-						response_format: 'url'
-					}),
-					success: function(response) {
-						var imageUrl = response.data[0].url;
-						$('#image-container').html('<img src="' + imageUrl + '">');
-					},
-					error: function(xhr, status, error) {
-						console.error(error);
-					}
-				});
-			});
-		});
-	</script>
+    <h1>OpenAI Image API Example</h1>
+    <label for="prompt">Enter a prompt:</label>
+    <input type="text" id="prompt">
+    <button id="generate">Generate Image</button>
+    <div id="image-container"></div>
+
+    <!-- Load environment variables from .env file -->
+    <script src="https://cdn.jsdelivr.net/npm/dotenv@10.0.0/dist/dotenv.min.js"></script>
+    <script>
+        dotenv.config();
+
+        // Retrieve the API key from the environment variable
+        var apiKey = process.env.OPENAI_API_KEY;
+
+        // Event listener for the "Generate Image" button
+        $("#generate").click(function() {
+            // Retrieve the prompt from the text input
+            var prompt = $("#prompt").val();
+
+            // Make the API request using jQuery
+            $.ajax({
+                type: 'POST',
+                url: 'https://api.openai.com/v1/images/generations',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + apiKey
+                },
+                data: JSON.stringify({
+                    model: 'image-alpha-001',
+                    prompt: prompt,
+                    num_images: 1,
+                    size: '512x512',
+                    response_format: 'url'
+                }),
+                success: function(response) {
+                    // Show the generated image in the container
+                    $("#image-container").html("<img src='" + response.data[0].url + "'>");
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors here
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
