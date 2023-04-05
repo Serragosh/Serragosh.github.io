@@ -2,68 +2,58 @@
 <html>
 <head>
 	<title>Poop Button</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
+	<style type="text/css">
 		body {
-			background-color: #fff;
-			text-align: center;
+			background-color: #f2f2f2;
+			font-family: Arial, sans-serif;
 		}
-		
-		h1 {
-			font-size: 3rem;
-			color: #f00;
-		}
-		
-		#poop-button {
-			background-color: #f00;
-			color: #fff;
-			font-size: 2rem;
-			padding: 1rem 2rem;
+
+		button {
+			font-size: 30px;
+			padding: 20px 40px;
+			background-color: red;
+			color: white;
 			border: none;
-			border-radius: 1rem;
+			border-radius: 10px;
 			cursor: pointer;
-			transition: all 0.3s ease-in-out;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
-		
-		#poop-button:hover {
-			background-color: #f88;
+
+		button:hover {
+			background-color: #cc0000;
 		}
-		
-		#poop-button.blue {
-			background-color: #00f;
-			color: #fff;
-			box-shadow: 0 0 20px 10px #00f;
-			animation: confetti 1s ease-in-out;
-			animation-fill-mode: forwards;
+
+		.confetti {
+			position: fixed;
+			width: 10px;
+			height: 10px;
+			background-color: #f00;
+			opacity: 1;
+			animation: confetti 2s ease-out;
 		}
-		
+
 		@keyframes confetti {
-			0% {
-				transform: translateY(0);
-				opacity: 1;
-			}
-			
-			50% {
-				transform: translateY(-100px) rotate(180deg);
-				opacity: 0.5;
-			}
-			
-			100% {
-				transform: translateY(-200px) rotate(360deg);
-				opacity: 0;
-			}
+			from { transform: translate(0, 0); opacity: 1; }
+			to { transform: translate(300px, 1000px); opacity: 0; }
 		}
 	</style>
 </head>
 <body>
-	<h1>Poop Button</h1>
-	<button id="poop-button" onclick="poop()">Poop</button>
-	
-	<script>
+	<button id="poop-button" onclick="poop()">POOP</button>
+
+	<script type="text/javascript">
 		function poop() {
-			document.getElementById("poop-button").classList.add("blue");
-			document.getElementById("poop-button").innerHTML = "Thanks for pooping!";
+			document.getElementById("poop-button").style.backgroundColor = "blue";
+			for (var i = 0; i < 100; i++) {
+				var confetti = document.createElement("div");
+				confetti.classList.add("confetti");
+				confetti.style.left = Math.random() * window.innerWidth + "px";
+				confetti.style.animationDelay = Math.random() * 2 + "s";
+				document.body.appendChild(confetti);
+			}
 		}
 	</script>
 </body>
