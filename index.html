@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OpenAI Image Generator</title>
+    <title>Blinking Eye</title>
+    <style>
+      /* Define the CSS for the blinking eye animation */
+      .blink {
+        animation: blink-animation 1s steps(5, start) infinite;
+        -webkit-animation: blink-animation 1s steps(5, start) infinite;
+        margin: auto;
+        font-size: 96px;
+        font-weight: bold;
+      }
+      @keyframes blink-animation {
+        to {
+          visibility: hidden;
+        }
+      }
+      @-webkit-keyframes blink-animation {
+        to {
+          visibility: hidden;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>OpenAI Image Generator</h1>
-    <form>
-      <label for="prompt">Enter your prompt:</label>
-      <input type="text" id="prompt" name="prompt">
-      <button type="button" onclick="generateImage()">Generate Image</button>
-    </form>
-    <div id="image-container"></div>
-
-    <script>
-      function generateImage() {
-        const prompt = document.getElementById('prompt').value;
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/generate-image');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            const imageUrl = response.imageUrl;
-            const imageContainer = document.getElementById('image-container');
-            imageContainer.innerHTML = '<img src="' + imageUrl + '">';
-          } else {
-            console.log('Error: ' + xhr.status);
-          }
-        };
-        xhr.send(JSON.stringify({ prompt: prompt }));
-      }
-    </script>
+    <div class="blink">
+      <pre>
+         ___
+      q(-_-)p
+       (o o)
+        ()()
+       ()(())
+      </pre>
+    </div>
   </body>
 </html>
